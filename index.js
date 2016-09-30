@@ -24,8 +24,23 @@ program
     .parse(process.argv);
 
 if (!args) {
-    program.outputHelp();
-    process.exit(-1);
+    try {
+        let config = require('./binject.json');
+        if (!config.htmlFile) {
+            throw new Error("htmlFile isn't set in binject.json");
+        }
+        args = {
+            htmlFile: config.htmlFile,
+            options: {
+                ignorePath: config.ignorePath || '.',
+                watch: !!config.watch,
+                relative: !!config.relative
+            }
+        }
+    } catch (e) {
+        program.outputHelp();
+        process.exit(-1);
+    }
 }
 
 function perform() {

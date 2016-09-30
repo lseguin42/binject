@@ -1,1 +1,8 @@
 node_modules/
+
+# bower ignore
+.bowerrc
+bower.json
+public/
+index.html
+binject.json
